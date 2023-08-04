@@ -90,6 +90,9 @@ playerLives = 6
 # Create a list with "_" instead of letters. Length must be the same as random word length
 display = []
 
+# Create another list with missed letters
+missedLetters = []
+
 # Initial state of 'display' is _ _ _ _ _ _ _
 for _ in range(wordLength):
     display.append("_")
@@ -101,8 +104,11 @@ allLettersGuessed = False
 guess = ""
 
 # Delete this line when development was finished
-print(f"Pssst, the solution is {word}.")
-print("")
+# print(f"Pssst, the solution is {word}.")
+# print("")
+
+ # Clear console
+clear_console()
 
 # This is the main game loop
 while not allLettersGuessed:
@@ -123,7 +129,13 @@ while not allLettersGuessed:
 
     # If player hasn't guessed the letter last round and isn't first round, subs a life
     if (guess not in word) and (guess != ""):
+        
         playerLives -= 1
+        
+        # We also have to register that letter in missed letters list (if it isn't there yet)
+        if guess not in missedLetters:
+            missedLetters.append(guess)
+
         print(f"Letter '{guess}' is not in the word. You lose a life")
         print("")
 
@@ -132,6 +144,15 @@ while not allLettersGuessed:
     print("")
     for i in range(wordLength):
         print(display[i],end=" ")
+    print("")
+    print("")
+
+    # Inform user about missed letters
+    print("You have missed these letters:",end=" ")
+
+    for letter in missedLetters:
+        print(letter,end=" ")
+
     print("")
 
     # Display game state
